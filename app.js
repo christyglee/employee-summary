@@ -14,6 +14,141 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
+let employeeList = [];
+
+function managerPrompts() {
+    return inquirer.prompt([
+        {
+            message: "Please build your team here."
+        },
+        {
+            type: "input",
+            name: "managerName",
+            message: "What is your manager's name?"
+        },
+        {
+            type: "input",
+            name: "managerID",
+            message: "What is your manager's ID?"
+        },
+        {
+            type: "input",
+            name: "managerEmail",
+            message: "What is your manager's email?"
+        },
+        {
+            type: "input",
+            name: "managerNumber",
+            message: "What is your manager's office number?"
+        }
+    ]).then(function(answer){
+        let managerName = answer.managerName;
+        let managerID = answer.managerID;
+        let managerEmail = answer.managerEmail;
+        let managerNumber = answer.managerNumber;
+
+        let manager = new Manager(managerName, managerID, managerEmail, managerNumber);
+
+        employeeList.push(manager);
+
+        employeePrompts();
+    });
+
+function employeePrompts() {
+    return inquirer.prompt([
+        {
+            type: "list",
+            name: "employeeType",
+            message: "What is your employee's role?",
+            choices: ["Engineer", "Intern"]
+        },
+        {
+            type: "input",
+            name: "employeeName",
+            message: "What is your engineer's name?"
+        },
+        {
+            type: "input",
+            name: "employeeID",
+            message: "What is your engineer's ID?"
+        },
+        {
+            type: "input",
+            name: "employeeEmail",
+            message: "What is your engineer's email?"
+        }  
+
+    ]).then(function(answer) {
+        let employeeType = answer.employeeType;
+        let employeeName = ansewr.employeeName;
+        let employeeEmail = answer.employeeEmail;
+
+        if(employeeType === "Engineer") {
+            inquirer.prompt([
+                {
+                    type: "input",
+                    name: "engineerGithub",
+                    message: "What is your engineer's GitHub username?"
+                },
+                {
+                    type: "list",
+                    name: "additionalEmployee",
+                    message: "Would you like to add another employee?",
+                    choices: ["Yes", "No",]
+                }
+            ]).then(function(answer){
+                let engineerGitHub = answer.engineerGitHub;
+
+                let engineer = new Engineer(employeeName, employeeID, employeeEmail, engineerGitHub);
+
+                employeeList.push(engineer);
+
+                if(answer.additionalEmployee === "Yes") {
+                    employeePrompts();
+                } else {
+                    generatePage();
+                    return;
+                }
+            });
+            
+        } else {
+            inquirer.prompt([
+                {
+                    type: "input",
+                    name: "internSchool",
+                    message: "What school does your intern go to?"
+                },
+                {
+                    type: "list",
+                    name: "additionalEmployee",
+                    message: "Would you like to add another employee?",
+                    choices: ["Yes", "No",]
+                }
+            ]).then(function(answer){
+                let internSchool = response.internSchool;
+
+                let intern = new Intern(employeeName, employeeID, employeeEmail, internSchool);
+
+                employeeList.push(intern);
+
+                if(answer.additionalEmployee === "Yes") {
+                    employeePrompts();
+                } else {
+                    generatePage();
+                    return;
+                }
+            });
+        }
+    })
+        
+}
+
+}
+console.log(employeeList);
+
+
+
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
