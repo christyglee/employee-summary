@@ -27,6 +27,7 @@ function managerPrompts() {
         {
             type: "input",
             name: "managerID",
+
             message: "What is your manager's ID?"
         },
         {
@@ -39,12 +40,7 @@ function managerPrompts() {
             name: "managerNumber",
             message: "What is your manager's office number?"
         },
-        // {
-        //     type: "list",
-        //     name: "additionalEmployee",
-        //     message: "Would you like to add another employee?",
-        //     choices: ["Yes", "No"]
-        // }
+
     ]).then(function (answer) {
         let managerName = answer.managerName;
         let managerID = answer.managerID;
@@ -57,12 +53,6 @@ function managerPrompts() {
         console.log("Start building your team!");
         employeePrompts();
 
-        // if (answer.additionalEmployee === "Yes") {
-        //     employeePrompts();
-        // } else {
-        //     employeeTeam();
-        //     return;
-        // }
     });
 
     function employeePrompts() {
@@ -108,6 +98,7 @@ function managerPrompts() {
                         message: "Would you like to add another employee?",
                         choices: ["Yes", "No"]
                     }
+
                 ]).then(function (answer) {
 
                     let github = answer.github;
@@ -118,6 +109,7 @@ function managerPrompts() {
 
                     if (answer.additionalEmployee === "Yes") {
                         employeePrompts();
+
                     } else {
                         employeeTeam();
                         return;
@@ -137,6 +129,7 @@ function managerPrompts() {
                         message: "Would you like to add another employee?",
                         choices: ["Yes", "No"]
                     }
+                    
                 ]).then(function (answer) {
 
                     let internSchool = answer.internSchool;
@@ -147,8 +140,8 @@ function managerPrompts() {
 
                     if (answer.additionalEmployee === "Yes") {
                         employeePrompts();
+
                     } else {
-                        // fs.writeFileSync(outputPath, render(employeeList), "utf8");
                         employeeTeam();
                         return;
                     }
