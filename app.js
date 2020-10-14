@@ -99,7 +99,7 @@ function managerPrompts() {
                 inquirer.prompt([
                     {
                         type: "input",
-                        name: "engineerGithub",
+                        name: "github",
                         message: "What is your engineer's GitHub username?"
                     },
                     {
@@ -110,9 +110,9 @@ function managerPrompts() {
                     }
                 ]).then(function (answer) {
 
-                    let engineerGitHub = answer.engineerGitHub;
+                    let github = answer.github;
 
-                    let engineer = new Engineer(employeeName, employeeID, employeeEmail, engineerGitHub);
+                    let engineer = new Engineer(employeeName, employeeID, employeeEmail, github);
 
                     employeeList.push(engineer);
 
