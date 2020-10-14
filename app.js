@@ -17,10 +17,8 @@ const render = require("./lib/htmlRenderer");
 let employeeList = [];
 
 function managerPrompts() {
+    console.log("Please build your team here.")
     return inquirer.prompt([
-        {
-            message: "Please build your team here."
-        },
         {
             type: "input",
             name: "managerName",
@@ -60,7 +58,7 @@ function employeePrompts() {
             type: "list",
             name: "employeeType",
             message: "What is your employee's role?",
-            choices: ["Engineer", "Intern"]
+            choices: ["Manager", "Engineer", "Intern"]
         },
         {
             type: "input",
@@ -76,14 +74,23 @@ function employeePrompts() {
             type: "input",
             name: "employeeEmail",
             message: "What is your engineer's email?"
-        }  
+        },
+        {
+            type: "list",
+            name: "additionalEmployee",
+            message: "Would you like to add another employee?",
+            choices: ["Yes", "No",]
+        }
 
     ]).then(function(answer) {
         let employeeType = answer.employeeType;
         let employeeName = ansewr.employeeName;
         let employeeEmail = answer.employeeEmail;
 
-        if(employeeType === "Engineer") {
+        if(employeeType === "Manager"){
+            managerPrompts();
+
+        } if(employeeType === "Engineer"){
             inquirer.prompt([
                 {
                     type: "input",
@@ -94,7 +101,7 @@ function employeePrompts() {
                     type: "list",
                     name: "additionalEmployee",
                     message: "Would you like to add another employee?",
-                    choices: ["Yes", "No",]
+                    choices: ["Yes", "No"]
                 }
             ]).then(function(answer){
                 let engineerGitHub = answer.engineerGitHub;
@@ -103,10 +110,10 @@ function employeePrompts() {
 
                 employeeList.push(engineer);
 
-                if(answer.additionalEmployee === "Yes") {
+                if(answer.additionalEmployee === "Yes"){
                     employeePrompts();
                 } else {
-                    generatePage();
+                    appendHTML();
                     return;
                 }
             });
@@ -122,7 +129,7 @@ function employeePrompts() {
                     type: "list",
                     name: "additionalEmployee",
                     message: "Would you like to add another employee?",
-                    choices: ["Yes", "No",]
+                    choices: ["Yes", "No"]
                 }
             ]).then(function(answer){
                 let internSchool = response.internSchool;
@@ -134,17 +141,18 @@ function employeePrompts() {
                 if(answer.additionalEmployee === "Yes") {
                     employeePrompts();
                 } else {
-                    generatePage();
+                    appendHTML();
                     return;
                 }
             });
         }
-    })
-        
+    })       
 }
-
 }
 console.log(employeeList);
+
+
+managerPrompts();
 
 
 
