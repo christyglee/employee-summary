@@ -19,7 +19,7 @@ Each employee type (manager, engineer, or intern) had slightly different informa
 
 <br>
 
-To view the demo of this application, please navigate to the **Demo Link** below or  [click here](https://drive.google.com/file/d/1ZUi_FjFtooDOfInEGDim1jUedjpa8o1w/view) to view.
+To view the demo of this application, please navigate to the **Demo Link** below or  [click here](https://drive.google.com/file/d/1xYPoTutEGbWFlKxCVmbB60WNB-zJGCDh/view) to view.
 
 <br>
 
@@ -44,9 +44,9 @@ To view the demo of this application, please navigate to the **Demo Link** below
 
 ## Demo Link
 
-[![Watch the video](goodREADME-2.PNG)](https://drive.google.com/file/d/1ZUi_FjFtooDOfInEGDim1jUedjpa8o1w/view)
+[![Watch the video](employeeSummary4.PNG)](https://drive.google.com/file/d/1xYPoTutEGbWFlKxCVmbB60WNB-zJGCDh/view)
 
-* [See Demo Link](https://drive.google.com/file/d/1ZUi_FjFtooDOfInEGDim1jUedjpa8o1w/view)
+* [See Demo Link](https://drive.google.com/file/d/1xYPoTutEGbWFlKxCVmbB60WNB-zJGCDh/view)
 
 <br>
 
