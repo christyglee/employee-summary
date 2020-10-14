@@ -38,8 +38,14 @@ function managerPrompts() {
             type: "input",
             name: "managerNumber",
             message: "What is your manager's office number?"
+        },
+        {
+            type: "list",
+            name: "additionalEmployee",
+            message: "Would you like to add another employee?",
+            choices: ["Yes", "No"]
         }
-    ]).then(function(answer){
+    ]).then(function (answer) {
         let managerName = answer.managerName;
         let managerID = answer.managerID;
         let managerEmail = answer.managerEmail;
@@ -48,111 +54,116 @@ function managerPrompts() {
         let manager = new Manager(managerName, managerID, managerEmail, managerNumber);
 
         employeeList.push(manager);
-
-        employeePrompts();
+        if (answer.additionalEmployee === "Yes") {
+            employeePrompts();
+        } else {
+            fs.writeFileSync(outputPath, render(employeeList), "utf8");
+            return;
+        }
     });
 
-function employeePrompts() {
-    return inquirer.prompt([
-        {
-            type: "list",
-            name: "employeeType",
-            message: "What is your employee's role?",
-            choices: ["Manager", "Engineer", "Intern"]
-        },
-        {
-            type: "input",
-            name: "employeeName",
-            message: "What is your engineer's name?"
-        },
-        {
-            type: "input",
-            name: "employeeID",
-            message: "What is your engineer's ID?"
-        },
-        {
-            type: "input",
-            name: "employeeEmail",
-            message: "What is your engineer's email?"
-        },
-        {
-            type: "list",
-            name: "additionalEmployee",
-            message: "Would you like to add another employee?",
-            choices: ["Yes", "No",]
-        }
+    function employeePrompts() {
+        return inquirer.prompt([
+            {
+                type: "list",
+                name: "employeeType",
+                message: "What is your employee's role?",
+                choices: ["Manager", "Engineer", "Intern"]
+            },
+            {
+                type: "input",
+                name: "employeeName",
+                message: "What is your employee's name?"
+            },
+            {
+                type: "input",
+                name: "employeeID",
+                message: "What is your employee's ID?"
+            },
+            {
+                type: "input",
+                name: "employeeEmail",
+                message: "What is your employee's email?"
+            }
 
-    ]).then(function(answer) {
-        let employeeType = answer.employeeType;
-        let employeeName = ansewr.employeeName;
-        let employeeEmail = answer.employeeEmail;
+        ]).then(function (answer) {
+            let employeeType = answer.employeeType;
 
-        if(employeeType === "Manager"){
-            managerPrompts();
+            if (employeeType === "Manager") {
+                managerPrompts();
 
-        } if(employeeType === "Engineer"){
-            inquirer.prompt([
-                {
-                    type: "input",
-                    name: "engineerGithub",
-                    message: "What is your engineer's GitHub username?"
-                },
-                {
-                    type: "list",
-                    name: "additionalEmployee",
-                    message: "Would you like to add another employee?",
-                    choices: ["Yes", "No"]
-                }
-            ]).then(function(answer){
-                let engineerGitHub = answer.engineerGitHub;
+            } if (employeeType === "Engineer") {
+                return inquirer.prompt([
+                    {
+                        type: "input",
+                        name: "engineerGithub",
+                        message: "What is your engineer's GitHub username?"
+                    },
+                    {
+                        type: "list",
+                        name: "additionalEmployee",
+                        message: "Would you like to add another employee?",
+                        choices: ["Yes", "No"]
+                    }
+                ]).then(function (answer) {
 
-                let engineer = new Engineer(employeeName, employeeID, employeeEmail, engineerGitHub);
+                    let employeeName = answer.employeeName;
+                    let employeeID = answer.employeeID;
+                    let employeeEmail = answer.employeeEmail;
+                    let engineerGitHub = answer.engineerGitHub;
 
-                employeeList.push(engineer);
+                    let engineer = new Engineer(employeeName, employeeID, employeeEmail, engineerGitHub);
 
-                if(answer.additionalEmployee === "Yes"){
-                    employeePrompts();
-                } else {
-                    appendHTML();
-                    return;
-                }
-            });
-            
-        } else {
-            inquirer.prompt([
-                {
-                    type: "input",
-                    name: "internSchool",
-                    message: "What school does your intern go to?"
-                },
-                {
-                    type: "list",
-                    name: "additionalEmployee",
-                    message: "Would you like to add another employee?",
-                    choices: ["Yes", "No"]
-                }
-            ]).then(function(answer){
-                let internSchool = response.internSchool;
+                    employeeList.push(engineer);
 
-                let intern = new Intern(employeeName, employeeID, employeeEmail, internSchool);
+                    if (answer.additionalEmployee === "Yes") {
+                        employeePrompts();
+                    } else {
+                        fs.writeFileSync(outputPath, render(employeeList), "utf8");
+                        return;
+                    }
+                });
 
-                employeeList.push(intern);
+            } else {
+                return inquirer.prompt([
+                    {
+                        type: "input",
+                        name: "internSchool",
+                        message: "What school does your intern go to?"
+                    },
+                    {
+                        type: "list",
+                        name: "additionalEmployee",
+                        message: "Would you like to add another employee?",
+                        choices: ["Yes", "No"]
+                    }
+                ]).then(function (answer) {
+                    let employeeName = answer.employeeName;
+                    let employeeID = answer.employeeID;
+                    let employeeEmail = answer.employeeEmail;
+                    let internSchool = answer.internSchool;
 
-                if(answer.additionalEmployee === "Yes") {
-                    employeePrompts();
-                } else {
-                    appendHTML();
-                    return;
-                }
-            });
-        }
-    })       
+                    let intern = new Intern(employeeName, employeeID, employeeEmail, internSchool);
+
+                    employeeList.push(intern);
+
+                    if (answer.additionalEmployee === "Yes") {
+                        employeePrompts();
+                    } else {
+                        fs.writeFileSync(outputPath, render(employeeList), "utf8");
+                        return;
+                    }
+                });
+            }
+        })
+    }
+
 }
-}
-console.log(employeeList);
+// console.log(employeeList);
 
 
 managerPrompts();
+
 
 
 
